@@ -31,9 +31,9 @@ const UsersService = {
     insertNewUserIntoDatabase(db, newUser) {
         return db
             .insert(newUser)
-            .into('sleuth-users')
+            .into('sleuth_users')
             .returning('*')
-            .then(user => user);
+            .then(([ user ]) => user);
     },
 
     sanitizeUser(user) {

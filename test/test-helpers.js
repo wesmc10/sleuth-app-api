@@ -2,7 +2,7 @@ function makeTestUsers() {
     return [
         {
             id: 1,
-            first_name: 'user-one-first--name',
+            first_name: 'user-one-first-name',
             last_name: 'user-one-last-name',
             user_name: 'user-one-user-name',
             password: '!2#4QwEr'
@@ -10,7 +10,7 @@ function makeTestUsers() {
 
         {
             id: 2,
-            first_name: 'user-two-first--name',
+            first_name: 'user-two-first-name',
             last_name: 'user-two-last-name',
             user_name: 'user-two-user-name',
             password: '$3@1ReWq'
@@ -18,7 +18,7 @@ function makeTestUsers() {
 
         {
             id: 3,
-            first_name: 'user-three-first--name',
+            first_name: 'user-three-first-name',
             last_name: 'user-three-last-name',
             user_name: 'user-three-user-name',
             password: '1@3$qWeR'
@@ -26,7 +26,7 @@ function makeTestUsers() {
 
         {
             id: 4,
-            first_name: 'user-four-first--name',
+            first_name: 'user-four-first-name',
             last_name: 'user-four-last-name',
             user_name: 'user-four-user-name',
             password: '4#2!rEwQ'
