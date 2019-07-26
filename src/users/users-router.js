@@ -10,12 +10,12 @@ usersRouter
     .post(bodyParser, (req, res, next) => {
         const { first_name, last_name, user_name, password } = req.body;
 
-        for (const key of ['first_name', 'last_name', 'user_name', 'password']) {
-            if (!req.body[key]) {
+        for (const field of ['first_name', 'last_name', 'user_name', 'password']) {
+            if (!req.body[field]) {
                 return res
                     .status(400)
                     .json({
-                        error: `The ${key} field is required`
+                        error: `The ${field} field is required`
                     });
             }
         }
