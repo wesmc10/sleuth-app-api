@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs');
+const xss = require('xss');
 
 const UsersService = {
     validatePassword(password) {
@@ -25,6 +26,23 @@ const UsersService = {
 
     hashpassword(password) {
         return bcrypt.hash(password, 12);
+    },
+
+    insertNewUserIntoDatabase(db, newUser) {
+        return db
+            .insert(newUser)
+            .into('sleuth-users')
+            .returning('*')
+            .then(user => user);
+    },
+
+    sanitizeUser(user) {
+        return {
+            id: user.id,
+            first_name: xss(user.first_name),
+            last_name: xss(user.last_name),
+            user_name: xss(user.user_name)
+        };
     }
 };
 

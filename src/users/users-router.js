@@ -47,6 +47,17 @@ usersRouter
                             user_name,
                             password: hashedPassword
                         };
+
+                        return UsersService.insertNewUserIntoDatabase(req.app.get('db'), newUser)
+                            .then(user => {
+                                res
+                                    .status(201)
+                                    .location(path.posix.join(req.originalUrl, `/${user.id}`))
+                                    .json({
+                                        user: UsersService.sanitizeUser(user)
+                                    });
+
+                            })
                     })
             })
             .catch(next);
