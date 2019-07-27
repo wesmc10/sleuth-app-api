@@ -7,6 +7,7 @@ describe.only('Jobs endpoints', () => {
     let db;
 
     const testUsers = testHelpers.makeTestUsers();
+    const testUser = testUsers[3];
     const testJobs = testHelpers.makeTestJobs();
     const testJob = testJobs[0];
 
@@ -84,6 +85,32 @@ describe.only('Jobs endpoints', () => {
                                 expect(job.user_id).to.eql(newJob.user_id);
                             })
                     )
+            });
+        });
+    });
+
+    describe('GET /api/jobs/:job_id', () => {
+        context('happy path', () => {
+            beforeEach('insert users into db', () => {
+                return db
+                    .insert(testUsers)
+                    .into('sleuth_users');
+            });
+
+            beforeEach('insert jobs into db', () => {
+                return db
+                    .insert(testJobs)
+                    .into('sleuth_jobs');
+            });
+
+            it('responds with 200 and sanitizes and returns the specified job', () => {
+                const jobId = 1;
+                const selectedJob = testJob;
+
+                return supertest(app)
+                    .get(`/api/jobs/${jobId}`)
+                    .set('Authorization', testHelpers.makeAuthorizationHeader(testUser))
+                    .expect(200, selectedJob);
             });
         });
     });

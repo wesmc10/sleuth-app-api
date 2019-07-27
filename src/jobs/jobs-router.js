@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const bodyParser = express.json();
 const JobsService = require('./jobs-service');
-const jwtAuthorization = require('../middleware/jwt-auth').default;
+const jwtAuthorization = require('../middleware/jwt-auth');
 
 const jobsRouter = express.Router();
 
