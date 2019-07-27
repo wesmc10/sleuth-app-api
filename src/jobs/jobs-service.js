@@ -23,6 +23,14 @@ const JobsService = {
             notes: xss(job.notes),
             user_id: job.user_id
         };
+    },
+
+    getJobById(db, id) {
+        return db
+            .select('*')
+            .from('sleuth_jobs')
+            .where({ id })
+            .first();
     }
 };
 

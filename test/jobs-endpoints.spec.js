@@ -51,24 +51,24 @@ describe.only('Jobs endpoints', () => {
                     .send(newJob)
                     .expect(201)
                     .expect(res => {
-                        expect(res.body).to.be.an('object').that.has.property('job');
-                        expect(res.body.job).to.have.property('id');
-                        expect(res.body.job).to.be.an('object');
-                        expect(res.body.job.company).to.eql(newJob.company);
-                        expect(res.body.job.position).to.eql(newJob.position);
-                        expect(res.body.job.job_location).to.eql(newJob.job_location);
-                        expect(res.body.job.salary).to.eql(newJob.salary);
-                        expect(res.body.job.date_applied).to.eql(newJob.date_applied);
-                        expect(res.body.job.interview_date).to.eql(newJob.interview_date);
-                        expect(res.body.job.application_status).to.eql(newJob.application_status);
-                        expect(res.body.job.notes).to.eql(newJob.notes);
-                        expect(res.body.job.user_id).to.eql(newJob.user_id);
-                        expect(res.headers.location).to.eql(`/api/jobs/${res.body.job.id}`);
+                        expect(res.body).to.be.an('object');
+                        expect(res.body).to.have.property('id');
+                        expect(res.body).to.be.an('object');
+                        expect(res.body.company).to.eql(newJob.company);
+                        expect(res.body.position).to.eql(newJob.position);
+                        expect(res.body.job_location).to.eql(newJob.job_location);
+                        expect(res.body.salary).to.eql(newJob.salary);
+                        expect(res.body.date_applied).to.eql(newJob.date_applied);
+                        expect(res.body.interview_date).to.eql(newJob.interview_date);
+                        expect(res.body.application_status).to.eql(newJob.application_status);
+                        expect(res.body.notes).to.eql(newJob.notes);
+                        expect(res.body.user_id).to.eql(newJob.user_id);
+                        expect(res.headers.location).to.eql(`/api/jobs/${res.body.id}`);
                     })
                     .expect(res =>
                         db
                             .from('sleuth_jobs')
-                            .where({ id: res.body.job.id })
+                            .where({ id: res.body.id })
                             .select('*')
                             .first()
                             .then(job => {
