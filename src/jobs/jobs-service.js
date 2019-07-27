@@ -38,6 +38,13 @@ const JobsService = {
             .from('sleuth_jobs')
             .where({ id })
             .delete();
+    },
+
+    updateJobById(db, updatedFields, id) {
+        return db
+            .from('sleuth_jobs')
+            .where({ id })
+            .update(updatedFields);
     }
 };
 

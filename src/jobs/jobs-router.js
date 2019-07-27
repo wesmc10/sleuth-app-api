@@ -72,6 +72,48 @@ jobsRouter
             })
             .catch(next);
     })
+    .patch(bodyParser, (req, res, next) => {
+        const { job_id } = req.params;
+        const { 
+            company,
+            position, 
+            job_location, 
+            salary, 
+            date_applied, 
+            interview_date, 
+            application_status, 
+            notes, 
+            user_id } = req.body;
+        
+        const jobToUpdate = {
+            company,
+            position,
+            job_location,
+            salary,
+            date_applied,
+            interview_date,
+            application_status,
+            notes,
+            user_id
+        };
+
+        const numberOfFieldsUpdated = Object.values(jobToUpdate).filter(Boolean).length;
+        if (numberOfFieldsUpdated === 0) {
+            return res
+                .status(400)
+                .json({
+                    error: 'Request body must contain at least one of the required fields'
+                });
+        }
+
+        JobsService.updateJobById(req.app.get('db'), jobToUpdate, job_id)
+            .then(noContent => {
+                res
+                    .status(204)
+                    .end();
+            })
+            .catch(next);
+    })
 
     async function checkIfJobExists(req, res, next) {
         try {

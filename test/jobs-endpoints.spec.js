@@ -147,4 +147,44 @@ describe.only('Jobs endpoints', () => {
             });
         });
     });
+
+    describe('PATCH /api/jobs/:job_id', () => {
+        context('happy path', () => {
+            beforeEach('insert users into db', () => {
+                return db
+                    .insert(testUsers)
+                    .into('sleuth_users');
+            });
+
+            beforeEach('insert jobs into db', () => {
+                return db
+                    .insert(testJobs)
+                    .into('sleuth_jobs');
+            });
+
+            it('responds with 204 and updates the specified job', () => {
+                const jobId = 1;
+                const updatedFields = {
+                    application_status: 'Technical',
+                    notes: 'new-job-notes'
+                };
+                const expectedJob = {
+                    ...testJob,
+                    ...updatedFields
+                };
+
+                return supertest(app)
+                    .patch(`/api/jobs/${jobId}`)
+                    .set('Authorization', testHelpers.makeAuthorizationHeader(testUser))
+                    .send(updatedFields)
+                    .expect(204)
+                    .then(res =>
+                        supertest(app)
+                            .get(`/api/jobs/${jobId}`)
+                            .set('Authorization', testHelpers.makeAuthorizationHeader(testUser))
+                            .expect(200, expectedJob)    
+                    )
+            });
+        });
+    });
 });
