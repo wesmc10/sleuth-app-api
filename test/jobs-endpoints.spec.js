@@ -114,4 +114,37 @@ describe.only('Jobs endpoints', () => {
             });
         });
     });
+
+    describe('DELETE /api/jobs/:job_id', () => {
+        context('happy path', () => {
+            beforeEach('insert users into db', () => {
+                return db
+                    .insert(testUsers)
+                    .into('sleuth_users');
+            });
+
+            beforeEach('insert jobs into db', () => {
+                return db
+                    .insert(testJobs)
+                    .into('sleuth_jobs');
+            });
+
+            it('responds with 204 and deletes the specified job', () => {
+                const jobId = 1;
+
+                return supertest(app)
+                    .delete(`/api/jobs/${jobId}`)
+                    .set('Authorization', testHelpers.makeAuthorizationHeader(testUser))
+                    .expect(204)
+                    .then(res =>
+                        supertest(app)
+                            .get(`/api/jobs/${jobId}`)
+                            .set('Authorization', testHelpers.makeAuthorizationHeader(testUser))
+                            .expect(404, {
+                                error: 'Job does not exist'
+                            })
+                    )
+            });
+        });
+    });
 });

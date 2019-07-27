@@ -61,6 +61,17 @@ jobsRouter
             .status(200)
             .json(JobsService.sanitizeJob(res.job));
     })
+    .delete((req, res, next) => {
+        const { job_id } = req.params;
+
+        JobsService.deleteJobById(req.app.get('db'), job_id)
+            .then(noContent => {
+                res
+                    .status(204)
+                    .end();
+            })
+            .catch(next);
+    })
 
     async function checkIfJobExists(req, res, next) {
         try {

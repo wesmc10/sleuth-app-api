@@ -31,6 +31,13 @@ const JobsService = {
             .from('sleuth_jobs')
             .where({ id })
             .first();
+    },
+
+    deleteJobById(db, id) {
+        return db
+            .from('sleuth_jobs')
+            .where({ id })
+            .delete();
     }
 };
 
