@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = express.json();
 const path = require('path');
 const UsersService = require('./users-service');
-const AuthService = require('../auth/jwt-auth-service');
+const JwtAuthService = require('../auth/jwt-auth-service');
 
 const usersRouter = express.Router();
 
@@ -57,7 +57,7 @@ usersRouter
                                     .status(201)
                                     .location(path.posix.join(req.originalUrl, `/${user.id}`))
                                     .json({
-                                        authToken: AuthService.createJwt(sub, payload),
+                                        authToken: JwtAuthService.createJwt(sub, payload),
                                         user: UsersService.sanitizeUser(user)
                                     });
 

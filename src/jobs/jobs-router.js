@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const bodyParser = express.json();
 const JobsService = require('./jobs-service');
-const jwtAuthorization = require('../middleware/jwt-auth');
+const jwtAuthorization = require('../middleware/jwt-auth').default;
 
 const jobsRouter = express.Router();
 
@@ -54,6 +54,7 @@ jobsRouter
 
 jobsRouter
     .route('/:job_id')
+    .all(jwtAuthorization)
     .all(checkIfJobExists)
     .get((req, res) => {
         res
