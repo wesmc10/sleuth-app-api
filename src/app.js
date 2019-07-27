@@ -5,6 +5,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const { NODE_ENV } = require('./config');
 const errorHandler = require('./errorHandler');
+const authRouter = require('./auth/jwt-auth-router');
 const usersRouter = require('./users/users-router');
 const jobsRouter = require('./jobs/jobs-router');
 
@@ -17,12 +18,9 @@ app.use(morgan(morganOption));
 app.use(cors());
 app.use(helmet());
 
+app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/jobs', jobsRouter);
-
-app.get('/', (req, res) => {
-    res.send('Hello, world!');
-});
 
 app.use(errorHandler);
 

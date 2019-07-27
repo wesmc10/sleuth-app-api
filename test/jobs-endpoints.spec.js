@@ -3,7 +3,7 @@ const knex = require('knex');
 const testHelpers = require('./test-helpers');
 const dateFns = require('date-fns');
 
-describe.only('Jobs endpoints', () => {
+describe('Jobs endpoints', () => {
     let db;
 
     const testUsers = testHelpers.makeTestUsers();

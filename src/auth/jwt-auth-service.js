@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config');
+const bcrypt = require('bcryptjs');
 
 const JwtAuthService = {
     createJwt(subject, payload) {
@@ -20,6 +21,16 @@ const JwtAuthService = {
             .from('sleuth_users')
             .where({ user_name })
             .first();
+    },
+
+    comparePasswords(password, hash) {
+        return bcrypt.compare(password, hash);
+    },
+
+    getUserJobs(db, user_id) {
+        return db
+            .from('sleuth_jobs')
+            .where({ user_id });
     }
 };
 

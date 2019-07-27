@@ -82,8 +82,7 @@ jobsRouter
             date_applied, 
             interview_date, 
             application_status, 
-            notes, 
-            user_id } = req.body;
+            notes } = req.body;
         
         const jobToUpdate = {
             company,
@@ -93,8 +92,7 @@ jobsRouter
             date_applied,
             interview_date,
             application_status,
-            notes,
-            user_id
+            notes
         };
 
         const numberOfFieldsUpdated = Object.values(jobToUpdate).filter(Boolean).length;

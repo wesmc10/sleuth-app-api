@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
 function makeTestUsers() {
     return [
@@ -112,6 +113,22 @@ function cleanTables(db) {
         )
 }
 
+function seedUsers(db, users) {
+    const hashedUsers = users.map(user => ({
+        ...user,
+        password: bcrypt.hashSync(user.password, 1)
+    }));
+    return db
+        .insert(hashedUsers)
+        .into('sleuth_users')
+        .then(() =>
+            db.raw(
+                `SELECT setval('sleuth_users_id_seq', ?)`,
+                [users[users.length - 1].id],
+            )
+        );
+}
+
 function makeAuthorizationHeader(user, secret=process.env.JWT_SECRET) {
     const token = jwt.sign({ user_id: user.id }, secret, {
         subject: user.user_name,
@@ -124,5 +141,6 @@ module.exports = {
     makeTestUsers,
     makeTestJobs,
     cleanTables,
+    seedUsers,
     makeAuthorizationHeader
 };
