@@ -3,11 +3,10 @@ const knex = require('knex');
 const bcrypt = require('bcryptjs');
 const testHelpers = require('./test-helpers');
 
-describe.only('Users endpoints', () => {
+describe('Users endpoints', () => {
     let db;
 
     const testUsers = testHelpers.makeTestUsers();
-    const testUser = testUsers[0];
 
     before('create db instance', () => {
         db = knex({
@@ -27,7 +26,12 @@ describe.only('Users endpoints', () => {
     describe('POST /api/users', () => {
         context('happy path', () => {
             it('responds with 201, stores and sanitizes user, hashes password, and creates authToken', () => {
-                const newUser = testUser;
+                const newUser = {
+                    first_name: 'first-name',
+                    last_name: 'last-name',
+                    user_name: 'user-name',
+                    password: '$#21REwq'
+                };
 
                 return supertest(app)
                     .post('/api/users')
@@ -39,6 +43,7 @@ describe.only('Users endpoints', () => {
                         expect(res.body.user).to.have.property('id');
                         expect(res.body.user).to.be.an('object');
                         expect(res.body.authToken).to.be.a('string');
+                        expect(res.body.user.id).to.be.a('number');
                         expect(res.body.user.first_name).to.eql(newUser.first_name);
                         expect(res.body.user.last_name).to.eql(newUser.last_name);
                         expect(res.body.user.user_name).to.eql(newUser.user_name);

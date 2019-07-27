@@ -34,6 +34,62 @@ function makeTestUsers() {
     ];
 }
 
+function makeTestJobs() {
+    return [
+        {
+            id: 1,
+            company: 'job-one-company',
+            position: 'job-one-position',
+            job_location: 'job-one-location',
+            salary: '$50,000',
+            date_applied: '2019-07-26',
+            interview_date: '2019-08-01',
+            application_status: 'Phone',
+            notes: 'job-one-notes',
+            user_id: 4
+        },
+
+        {
+            id: 2,
+            company: 'job-two-company',
+            position: 'job-two-position',
+            job_location: 'job-two-location',
+            salary: '$60,000',
+            date_applied: '2019-07-11',
+            interview_date: '2019-08-03',
+            application_status: 'On-site',
+            notes: 'job-two-notes',
+            user_id: 3
+        },
+
+        {
+            id: 3,
+            company: 'job-three-company',
+            position: 'job-three-position',
+            job_location: 'job-three-location',
+            salary: '$70,000',
+            date_applied: '2019-07-03',
+            interview_date: '2019-08-10',
+            application_status: 'Technical',
+            notes: 'job-three-notes',
+            user_id: 2
+        },
+
+        {
+            id: 4,
+            company: 'job-four-company',
+            position: 'job-four-position',
+            job_location: 'job-four-location',
+            salary: '$80,000',
+            date_applied: '2019-07-20',
+            interview_date: '2019-08-14',
+            application_status: 'On-site',
+            notes: 'job-four-notes',
+            user_id: 1
+        }
+    ];
+}
+
 function cleanTables(db) {
     return db
         .transaction(trx =>
@@ -56,5 +112,6 @@ function cleanTables(db) {
 
 module.exports = {
     makeTestUsers,
+    makeTestJobs,
     cleanTables
 };

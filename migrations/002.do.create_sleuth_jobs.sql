@@ -5,7 +5,7 @@ CREATE TABLE sleuth_jobs (
     company varchar NOT NULL,
     position varchar NOT NULL,
     job_location varchar NOT NULL,
-    salary varchar(8),
+    salary varchar(9),
     date_applied date NOT NULL,
     interview_date date,
     application_status app_status,
