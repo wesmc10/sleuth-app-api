@@ -49,6 +49,7 @@ describe('Jobs endpoints', () => {
 
                 return supertest(app)
                     .post('/api/jobs')
+                    .set('Authorization', testHelpers.makeAuthorizationHeader(testUser))
                     .send(newJob)
                     .expect(201)
                     .expect(res => {

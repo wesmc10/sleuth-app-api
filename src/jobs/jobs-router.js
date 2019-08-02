@@ -8,6 +8,7 @@ const jobsRouter = express.Router();
 
 jobsRouter
     .route('/')
+    .all(jwtAuthorization)
     .post(bodyParser, (req, res, next) => {
         const { 
             company,
@@ -41,6 +42,10 @@ jobsRouter
             notes,
             user_id
         };
+
+        if (newJob.interview_date === '') {
+            newJob.interview_date = null;
+        }
 
         JobsService.insertNewJobIntoDatabase(req.app.get('db'), newJob)
             .then(job => {
