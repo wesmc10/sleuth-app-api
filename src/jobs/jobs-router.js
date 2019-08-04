@@ -100,6 +100,10 @@ jobsRouter
             notes
         };
 
+        if (jobToUpdate.interview_date === '') {
+            jobToUpdate.interview_date = null;
+        }
+
         const numberOfFieldsUpdated = Object.values(jobToUpdate).filter(Boolean).length;
         if (numberOfFieldsUpdated === 0) {
             return res
