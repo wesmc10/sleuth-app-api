@@ -166,7 +166,7 @@ describe('Jobs endpoints', () => {
             it('responds with 204 and updates the specified job', () => {
                 const jobId = 1;
                 const updatedFields = {
-                    application_status: 'Technical',
+                    application_status: 'Offer',
                     notes: 'new-job-notes'
                 };
                 const expectedJob = {

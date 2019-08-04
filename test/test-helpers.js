@@ -73,7 +73,7 @@ function makeTestJobs() {
             salary: '$70,000',
             date_applied: '2019-07-03',
             interview_date: '2019-08-10',
-            application_status: 'Technical',
+            application_status: 'Applied',
             notes: 'job-three-notes',
             user_id: 2
         },
