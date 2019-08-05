@@ -1,26 +1,258 @@
-# Express Boilerplate!
+# Sleuth API
 
-This is a boilerplate project used for starting new projects.
+## API Base Endpoint:
+* https://mighty-bayou-28648.herokuapp.com/api
 
-## Set up
 
-Complete the following steps to start a new project (NEW-PROJECT-NAME):
+## Log In
+Sets an authorization token and returns data about a specific user and the jobs the user has applied to
 
-1. Clone this repository to your local machine: `git clone BOILERPLATE-URL NEW-PROJECTS-NAME`
-2. `cd` into the cloned repository
-3. Make a fresh start of the git history for this project: `rm -rf .git && git init`
-4. Install the node dependencies: `npm install`
-5. Move the example Environment file to `.env` which will be ignored by git and read by the express server: `mv example.env .env`
-6. Edit the contents of the `package.json` to use NEW-PROJECT-NAME instead of `"name": "express-boilerplate",`
+* Route
 
-## Scripts
+   /auth/login
 
-Start the application: `npm start`
+* Method
 
-Start nodemon for the application: `npm run dev`
+   `POST`
 
-Run the tests: `npm test`
+* Data Parameters
 
-## Deploying
+   `'user_name': [string]`
 
-When your new project is ready for deployment, add a new Heroku application with `heroku create`. This will make a new git remote called "heroku" and you can then run `npm run deploy` which will push to this remote's master branch.
+   `'password': [string]`
+
+* Successful Response
+
+   **Code:** 200
+
+   **Content:** `{ authToken: [string], dbUser: [object], dbUserJobs: [array] }`
+
+* Error Response
+
+   **Code:** 400
+
+   **Content:** `{ error: Incorrect user name or password }`
+
+   OR
+
+   `{ error: Missing user name or password }`
+
+
+## Users
+Sets an authorization token and posts and returns data about a specific user
+
+* Route
+
+   /users
+
+* Method
+
+   `POST`
+
+* Data Parameters
+
+   `'first_name': [string]`
+
+   `'last_name': [string]`
+
+   `'user_name': [string]`
+
+   `'password': [string]`
+
+* Successful Response
+
+   **Code:** 201
+
+   **Content:** `{ authToken: [string], user: [object] }`
+
+* Error Response
+
+   **Code:** 400
+
+   **Content:** `{ error: The [key] field is required }`
+
+   OR
+
+   `{ error: User name already exists }`
+
+   OR
+
+   `{ Password must be between 8 and 72 characters in length }`
+
+   OR
+
+   `{ Password must not begin or end with empty spaces }`
+
+   OR
+
+   `{ Password must have at least one lowercase and uppercase letter, number, and special character }`
+
+
+## POST Jobs
+Posts and returns data about a specific job
+
+* Route
+
+   /jobs
+
+* Method
+
+   `POST`
+
+* Data Parameters
+
+   `'company': [string]`
+
+   `'position': [string]`
+
+   `'job_location': [string]`
+
+   `'salary': [string]`
+
+   `'date_applied': [date]`
+
+   `'interview_date': [date]`
+
+   `'application_status': [string] (either 'Applied', 'Phone', 'On-site', 'Offer', or 'Rejected')`
+
+   `'notes': [string]`
+
+   `'user_id': [integer]`
+
+* Successful Response
+
+   **Code:** 201
+
+   **Content:** `{ job [object] }`
+
+* Error Response
+
+   **Code:** 400
+
+   **Content:** `{ error: The [key] field is required }`
+
+
+## GET Jobs
+Returns data about a specific job
+
+* Route
+
+   /jobs/:job_id
+
+* Method
+
+   `GET`
+
+* Data Parameters
+
+   None
+
+* Successful Response
+
+   **Code:** 200
+
+   **Content:** `{ job [object] }`
+
+* Error Response
+
+   **Code:** 404
+
+   **Content:** `{ error: Job does not exist }`
+
+   OR
+
+   **Code:** 401
+
+   `{ error: Missing bearer token }`
+
+   OR
+
+   `{ error: Unauthorized request }`
+
+
+## DELETE Jobs
+Deletes a specific job
+
+* Method
+
+   `DELETE`
+
+* Data Parameters
+
+   None
+
+* Successful Response
+
+   **Code:** 204
+
+   **Content:** None
+
+* Error Response
+
+   **Code:** 404
+
+   **Content:** `{ error: Job does not exist }`
+
+   OR
+
+   **Code:** 401
+
+   `{ error: Missing bearer token }`
+
+   OR
+
+   `{ error: Unauthorized request }`
+
+
+## PATCH Jobs
+Updates and returns data about a specific job
+
+* Method
+
+   `PATCH`
+
+* Data Parameters
+
+    **At least one of:**
+
+   `'company': [string]`
+
+   `'position': [string]`
+
+   `'job_location': [string]`
+
+   `'salary': [string]`
+
+   `'date_applied': [date]`
+
+   `'interview_date': [date]`
+
+   `'application_status': [string] (either 'Applied', 'Phone', 'On-site', 'Offer', or 'Rejected')`
+
+* Successful Response
+
+   **Code:** 204
+
+   **Content:** None
+
+* Error Response
+
+   **Code:** 400
+
+   **Content:** `{ error: 'Request body must contain at least one of the required fields' }`
+
+   OR
+
+   **Code:** 404
+
+   **Content:** `{ error: Job does not exist }`
+
+   OR
+
+   **Code:** 401
+
+   `{ error: Missing bearer token }`
+
+   OR
+
+   `{ error: Unauthorized request }`
